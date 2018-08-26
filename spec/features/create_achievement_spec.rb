@@ -8,11 +8,20 @@ feature 'create new achievement' do
     fill_in('Title', with: 'Read a book')
     fill_in('Description', with: 'Worth to read')
     select('Public', from: 'Privacy')
-    check('Featured chievement')
+    check('Featured achievement')
     attach_file('Cover image', "#{Rails.root}/spec/fixtures/cover_image.png")
     click_on('Create Achievement')
 
     expect(page).to have_content('Achievement has been created')
     expect(Achievement.last.title).to eq('Read a book')
+  end
+
+  scenario 'cannot create achievement with invalid data' do
+    visit('/')
+    click_on('New Achievement')
+    click_on('Create Achievement')
+
+    expect(page).to have_content("can't be blank")
+    expect(page).to have_content('Something wrong')
   end
 end
