@@ -1,4 +1,8 @@
 class AchievementsController < ApplicationController
+  def index
+    @achievements = Achievement.public_access
+  end
+
   def new
     @achievement = Achievement.new
   end
@@ -16,6 +20,26 @@ class AchievementsController < ApplicationController
 
   def show
     @achievement = Achievement.find(params[:id])
+  end
+
+  def edit
+    @achievement = Achievement.find(params[:id])
+  end
+
+  def update
+    @achievement = Achievement.find(params[:id])
+    if @achievement.update(achievement_params)
+      flash[:notice] = 'Achievement has been updated'
+      redirect_to @achievement
+    else
+      flash[:notice] = 'Something wrong'
+      render :edit
+    end
+  end
+
+  def destroy
+    Achievement.destroy(params[:id])
+    redirect_to achievements_path
   end
 
   private
