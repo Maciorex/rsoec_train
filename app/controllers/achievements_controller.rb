@@ -7,7 +7,7 @@ class AchievementsController < ApplicationController
     @achievement = Achievement.new(achievement_params)
     if @achievement.save
       flash[:notice] = 'Achievement has been created'
-      redirect_to root_path
+      redirect_to @achievement
     else
       flash[:notice] = 'Something wrong'
       render :new
