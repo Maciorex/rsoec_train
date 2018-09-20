@@ -1,17 +1,71 @@
 require 'rails_helper'
 
 describe AchievementsController do
-  describe 'GET index' do
-    it 'renders index template' do
-      get :index
-      expect(response).to render_template(:index)
+
+  describe 'guest user' do
+    describe 'GET index' do
+      it 'renders index template' do
+        get :index
+        expect(response).to render_template(:index)
+      end
+
+      it 'assigns only public achievements' do
+        public_achievement = FactoryBot.create(:public_achievement)
+        private_achievement = FactoryBot.create(:private_achievement)
+        get :index
+        expect(assigns(:achievements)).to match_array([public_achievement])
+      end
     end
 
-    it 'assigns only public achievements' do
-      public_achievement = FactoryBot.create(:public_achievement)
-      private_achievement = FactoryBot.create(:private_achievement)
-      get :index
-      expect(assigns(:achievements)).to match_array([public_achievement])
+    describe 'GET show' do
+      let(:achievement) { FactoryBot.create(:public_achievement) }
+
+      it 'renders show template' do
+        get :show, params: { id: achievement.id }
+        expect(response).to render_template(:show)
+      end
+
+      it 'assigns requested achievement to @achievement' do
+        get :show, params: { id: achievement.id }
+        expect(assigns(:achievement)).to eq(achievement)
+      end
+    end
+
+    describe 'GET new' do
+      it 'redirects to login page' do
+        get :new
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'POST create' do
+      it 'redirects to login page' do
+        post :create, params: { achievement: FactoryBot.attributes_for(:public_achievement) }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'GET edit' do
+      it 'redirects to login page' do
+        get :edit, params: { id: FactoryBot.create(:public_achievement).id }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'PUT update' do
+      let(:achievement) { FactoryBot.create(:public_achievement) }
+      let(:valid_data) { FactoryBot.attributes_for(:public_achievement, title: 'New Title') }
+      it 'redirects to login page' do
+        put :update, params: { id: achievement.id, achievement: valid_data }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'DELETE destroy' do
+      it 'redirects to login page' do
+        delete :destroy, params: { id: FactoryBot.create(:public_achievement).id }
+        expect(response).to redirect_to(new_user_session_path)
+      end
     end
   end
 
@@ -70,20 +124,6 @@ describe AchievementsController do
     it 'assigns Achievement to @achievement' do
       get :new
       expect(assigns(:achievement)).to be_a_new(Achievement)
-    end
-  end
-
-  describe 'GET show' do
-    let(:achievement) { FactoryBot.create(:public_achievement) }
-
-    it 'renders show template' do
-      get :show, params: { id: achievement.id }
-      expect(response).to render_template(:show)
-    end
-
-    it 'assigns requested achievement to @achievement' do
-      get :show, params: { id: achievement.id }
-      expect(assigns(:achievement)).to eq(achievement)
     end
   end
 
