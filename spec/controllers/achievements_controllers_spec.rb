@@ -2,8 +2,7 @@ require 'rails_helper'
 
 describe AchievementsController do
 
-  describe 'guest user' do
-    let(:user) { FactoryBot.create(:user) }
+  shared_examples 'public access to achievements' do
     describe 'GET index' do
       it 'renders index template' do
         get :index
@@ -31,6 +30,12 @@ describe AchievementsController do
         expect(assigns(:achievement)).to eq(achievement)
       end
     end
+  end
+
+  describe 'guest user' do
+    let(:user) { FactoryBot.create(:user) }
+
+    it_behaves_like  'public access to achievements'
 
     describe 'GET new' do
       it 'redirects to login page' do
@@ -74,33 +79,7 @@ describe AchievementsController do
     let(:user) { FactoryBot.create(:user) }
     before { sign_in(user) }
 
-    describe 'GET index' do
-      it 'renders index template' do
-        get :index
-        expect(response).to render_template(:index)
-      end
-
-      it 'assigns only public achievements' do
-        public_achievement = FactoryBot.create(:public_achievement, user: user)
-        private_achievement = FactoryBot.create(:private_achievement, user: user)
-        get :index
-        expect(assigns(:achievements)).to match_array([public_achievement])
-      end
-    end
-
-    describe 'GET show' do
-      let(:achievement) { FactoryBot.create(:public_achievement, user: user) }
-
-      it 'renders show template' do
-        get :show, params: { id: achievement.id }
-        expect(response).to render_template(:show)
-      end
-
-      it 'assigns requested achievement to @achievement' do
-        get :show, params: { id: achievement.id }
-        expect(assigns(:achievement)).to eq(achievement)
-      end
-    end
+    it_behaves_like  'public access to achievements'
 
     describe 'GET new' do
       it 'renders a new template' do
