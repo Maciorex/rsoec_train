@@ -1,0 +1,136 @@
+AlignParameters:
+  Enabled: false
+ClassLength:
+  CountComments: false
+  Max: 200
+  Exclude:
+    - 'app/services/db/seeds/liquidity_invoices.rb'
+    - 'app/api/**/*'
+Documentation:
+  Enabled: false
+LineLength:
+  Max: 120
+MethodLength:
+  CountComments: false
+  Max: 15
+  Exclude:
+    - 'spec/**/*'
+    - 'app/services/sample_data/incoming_invoice.rb'
+    - 'app/services/sample_data/outgoing_invoice.rb'
+    - 'app/services/db/seeds/**/*'
+    - 'app/services/sample_data/incoming_invoice.rb'
+    - 'app/services/sample_data/outgoing_invoice.rb'
+    - 'app/services/deployment/update/figo_accounts_cleanup.rb'
+GuardClause:
+  Exclude:
+      - 'app/validators/recurring_payment_validator.rb'
+Metrics/AbcSize:
+  Max: 25
+  Exclude:
+    - 'spec/**/*'
+    - 'app/policies/outgoing_invoice_policy.rb'
+    - 'app/policies/incoming_invoice_policy.rb'
+    - 'app/services/db/seeds/**/*'
+    - 'app/services/db/seeds/liquidity_invoices.rb'
+    - 'app/services/deployment/update/figo_accounts_cleanup.rb'
+    - 'app/services/invoice_document/invoice_information_section.rb'
+Metrics/BlockLength:
+  Exclude:
+    - 'app/api/**/*'
+    - 'app/admin/*'
+    - 'app/validators/admin/*'
+    - 'spec/**/*'
+    - 'lib/tasks/**/*'
+    - 'app/services/deployment/update/figo_accounts_cleanup.rb'
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - 'app/models/onboarding.rb'
+    - 'app/uploaders/outgoing_invoice_file_uploader.rb'
+    - 'app/uploaders/payment_reminder_file_uploader.rb'
+    - 'app/uploaders/import_file_uploader.rb'
+Lint/SplatKeywordArguments:
+  Exclude: 
+    - 'app/services/gini/send_document.rb'
+    - 'app/services/gini/send_document.rb'
+    - 'app/services/incoming_invoice/update_credit_note.rb'
+    - 'spec/validators/add_product_catalog_item_to_product_catalog_group_validator_spec.rb'
+Naming/UncommunicativeMethodParamName:
+  Exclude:
+    - 'spec/services/datev_report/generate_zip_export/generate_booking_csv_export_spec.rb'
+Style/MixinUsage: 
+  Exclude: 
+    - 'lib/either.rb'
+    - lib/try.rb
+Metrics/ParameterLists:
+  Max: 7
+  Exclude:
+    - 'spec/features/**/*'
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'app/policies/outgoing_invoice_policy.rb'
+    - 'app/policies/incoming_invoice_policy.rb'
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'app/policies/outgoing_invoice_policy.rb'
+    - 'app/policies/incoming_invoice_policy.rb'
+AllCops:
+  TargetRubyVersion: 2.4.3
+  Exclude:
+    - 'bin/*'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'Gemfile'
+    - 'Guardfile'
+    - 'Capfile'
+    - 'Rakefile'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'app/controllers/passwords_controller.rb'
+    - 'app/admin/*'
+    - 'app/services/db/tmp/*'
+Style/Lambda:
+  EnforcedStyle: literal
+Layout/DotPosition:
+  EnforcedStyle: leading
+  Enabled: true
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+  SupportedStyles:
+    - aligned
+    - indented
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*'
+Lint/HandleExceptions:
+  Exclude:
+    - 'spec/jobs/send_by_email/outgoing_invoice_job_spec.rb'
+    - 'spec/jobs/send_by_email/payment_reminder_job_spec.rb'
+Lint/InterpolationCheck:
+  Exclude:
+    - 'spec/services/number_range/generate_number_spec.rb'
+Naming/PredicateName:
+  NameWhitelist:
+    - 'has_bank_account'
+    - 'has_changed_logo'
+    - 'has_created_invoice'
+    - 'has_clients?'
+    - 'has_outgoing_invoices?'
+    - 'has_proposals?'
+    - 'has_suppliers?'
+Style/Lambda:
+  EnforcedStyle: literal
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+Style/FormatStringToken:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/DateTime:
+  Enabled: false
+Style/ParallelAssignment:
+  Exclude:
+    - 'app/services/incoming_invoice/order.rb'
+    - 'app/services/outgoing_invoice/order.rb'

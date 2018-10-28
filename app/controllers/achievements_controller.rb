@@ -2,7 +2,7 @@ class AchievementsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create update destroy edit]
   before_action :check_owner, only: %i[edit update destroy]
   def index
-    @achievements = Achievement.public_access
+    @achievements = Achievement.get_public_achievements
   end
 
   def new
@@ -10,13 +10,12 @@ class AchievementsController < ApplicationController
   end
 
   def create
-    @achievement = Achievement.new(achievement_params)
-    @achievement.user = current_user
-    if @achievement.save
-      flash[:notice] = 'Achievement has been created'
-      redirect_to @achievement
+    service = CreateAchievement.new(achievement_params, current_user)
+    service.create
+    if service.created?
+      redirect_to achievements_path(service.achievement)
     else
-      flash[:notice] = 'Something wrong'
+      @achievement = service.achievement
       render :new
     end
   end
